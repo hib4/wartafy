@@ -273,7 +273,7 @@ with tab_about:
     #### Dataset
     **AG News Classification Dataset** — 120,000 training / 7,600 test articles across 4 categories:
     World, Sports, Business, and Science/Technology.
-    Source: [HuggingFace Datasets](https://huggingface.co/datasets/ag_news)
+    Source: [HuggingFace Datasets](https://huggingface.co/datasets/fancyzhx/ag_news)
 
     #### Technology Stack
     | Component | Library |
