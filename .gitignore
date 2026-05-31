@@ -34,5 +34,3 @@ htmlcov/
 
 # Project-generated outputs
 outputs/
-models/
-*.pkl
