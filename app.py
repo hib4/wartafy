@@ -175,20 +175,18 @@ with tab_predict:
                     st.pyplot(plot_confidence_bars(r, name))
 
                 else:
-                    cols = st.columns(len(models_to_show))
-                    for col, name in zip(cols, models_to_show):
+                    for name in models_to_show:
                         r = results[name]
                         cat = r["category"]
                         color = CATEGORY_COLORS.get(cat, "#90CAF9")
                         icon  = CATEGORY_ICONS.get(cat, "📄")
-                        with col:
-                            st.markdown(f"""
-                            <div class="result-box" style="background:{color}18; border-left: 5px solid {color};">
-                                <span class="badge" style="background:{color}; color:white;">{icon} {cat}</span>
-                                <p style="margin:0.4rem 0 0; color:#595959;">Confidence: <b>{r['confidence']}%</b></p>
-                            </div>
-                            """, unsafe_allow_html=True)
-                            st.pyplot(plot_confidence_bars(r, name))
+                        st.markdown(f"""
+                        <div class="result-box" style="background:{color}18; border-left: 5px solid {color};">
+                            <span class="badge" style="background:{color}; color:white;">{icon} {cat}</span>
+                            &nbsp;&nbsp;<span style="color:#595959;">Confidence: <b>{r['confidence']}%</b> &nbsp;|&nbsp; Model: <b>{name}</b></span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        st.pyplot(plot_confidence_bars(r, name))
 
 
 with tab_batch:
