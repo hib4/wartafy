@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -41,7 +42,7 @@ CATEGORY_ICONS = {
 
 @st.cache_resource(show_spinner="Loading models...")
 def get_models():
-    from train import load_models
+    from train import load_models, LabelDecodingPipeline
     return load_models()
 
 
@@ -76,14 +77,14 @@ with st.sidebar:
     st.title("Settings")
     selected_model = st.selectbox(
         "Primary model",
-        ["Logistic Regression", "Naive Bayes", "Both (compare)"],
+        ["Logistic Regression", "Naive Bayes", "Neural Network", "XGBoost", "All (compare)"],
         index=0,
     )
     st.markdown("---")
     st.markdown("**About**")
     st.caption(
-        "This classifier uses TF-IDF feature extraction with Logistic Regression "
-        "and Multinomial Naive Bayes trained on the AG News dataset."
+        "This classifier uses TF-IDF feature extraction with Logistic Regression, "
+        "Multinomial Naive Bayes, Neural Network (MLP), and XGBoost, trained on the AG News dataset."
     )
     st.markdown("**Categories**")
     for cat, icon in CATEGORY_ICONS.items():
@@ -151,7 +152,7 @@ with tab_predict:
                     results = run_prediction(input_text)
 
                 models_to_show = (
-                    list(results.keys()) if selected_model == "Both (compare)"
+                    list(results.keys()) if selected_model == "All (compare)"
                     else [selected_model] if selected_model in results
                     else list(results.keys())
                 )
@@ -249,13 +250,13 @@ with tab_eval:
         st.image(comparison_path, use_column_width=True)
 
         st.subheader("Confusion Matrices")
-        col1, col2 = st.columns(2)
-        if os.path.exists(lr_cm_path):
-            with col1:
-                st.image(lr_cm_path, caption="Logistic Regression", use_column_width=True)
-        if os.path.exists(nb_cm_path):
-            with col2:
-                st.image(nb_cm_path, caption="Naive Bayes", use_column_width=True)
+        cm_files = sorted(glob.glob(os.path.join(OUTPUT_DIR, "confusion_matrix_*.png")))
+        cols = st.columns(2)
+        for i, path in enumerate(cm_files):
+            col = cols[i % 2]
+            model_name = os.path.basename(path).replace("confusion_matrix_", "").replace(".png", "").replace("_", " ").title()
+            with col:
+                st.image(path, caption=model_name, use_column_width=True)
 
 
 with tab_about:
@@ -267,7 +268,7 @@ with tab_about:
     #### How It Works
     1. **Text Preprocessing** — Lowercasing, URL/HTML removal, punctuation stripping, stopword removal via NLTK
     2. **Feature Extraction** — TF-IDF vectorization (unigrams + bigrams, up to 50,000 features)
-    3. **Classification** — Logistic Regression (primary) and Multinomial Naive Bayes (baseline)
+    3. **Classification** — Logistic Regression, Multinomial Naive Bayes, Neural Network (MLP), and XGBoost
     4. **Evaluation** — Accuracy, Precision, Recall, F1-Score, and Confusion Matrix
 
     #### Dataset
@@ -280,7 +281,7 @@ with tab_about:
     |-----------|---------|
     | Language | Python 3.x |
     | NLP | NLTK |
-    | ML | Scikit-learn |
+    | ML | Scikit-learn, XGBoost |
     | Data | Pandas, HuggingFace Datasets |
     | UI | Streamlit |
     | Plots | Matplotlib, Seaborn |

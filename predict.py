@@ -1,5 +1,5 @@
 from preprocess import clean_text
-from train import load_models
+from train import load_models, LabelDecodingPipeline
 
 
 def predict_single(text: str, model_name: str = "Logistic Regression") -> dict:

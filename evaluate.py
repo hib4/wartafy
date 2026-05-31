@@ -14,7 +14,7 @@ from sklearn.metrics import (
 )
 
 from data_loader import load_ag_news
-from train import load_models, train_and_save
+from train import load_models, LabelDecodingPipeline, train_and_save
 
 OUTPUT_DIR = "outputs"
 
