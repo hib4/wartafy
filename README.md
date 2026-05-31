@@ -1,7 +1,5 @@
 # Wartafy
 
-Compact end-to-end run guide for new users.
-
 ## 1) Setup
 
 ```bash
