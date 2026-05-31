@@ -34,3 +34,6 @@ htmlcov/
 
 # Project-generated outputs
 outputs/
+
+# Models
+models/
