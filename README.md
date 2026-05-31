@@ -1,4 +1,4 @@
-# News Category Classifier
+# Wartafy
 
 Compact end-to-end run guide for new users.
 

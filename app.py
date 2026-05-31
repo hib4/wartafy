@@ -9,7 +9,7 @@ matplotlib.use("Agg")
 import numpy as np
 
 st.set_page_config(
-    page_title="News Category Classifier",
+    page_title="Wartafy",
     page_icon="📰",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -113,7 +113,7 @@ tab_predict, tab_batch, tab_eval, tab_about = st.tabs([
 
 
 with tab_predict:
-    st.markdown('<p class="main-title">📰 News Category Classifier</p>', unsafe_allow_html=True)
+    st.markdown('<p class="main-title">📰 Wartafy</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-title">Paste or type a news article and the model will classify its category.</p>', unsafe_allow_html=True)
 
     sample_articles = {
@@ -260,7 +260,7 @@ with tab_eval:
 with tab_about:
     st.header("About This Project")
     st.markdown("""
-    ### News Category Classifier
+    ### Wartafy
     An NLP-based automatic text classification system built as part of a machine learning coursework project.
 
     #### How It Works
