@@ -9,7 +9,7 @@ matplotlib.use("Agg")
 import numpy as np
 
 st.set_page_config(
-    page_title="News Category Classifier",
+    page_title="Wartafy",
     page_icon="📰",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -113,7 +113,7 @@ tab_predict, tab_batch, tab_eval, tab_about = st.tabs([
 
 
 with tab_predict:
-    st.markdown('<p class="main-title">📰 News Category Classifier</p>', unsafe_allow_html=True)
+    st.markdown('<p class="main-title">📰 Wartafy</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-title">Paste or type a news article and the model will classify its category.</p>', unsafe_allow_html=True)
 
     sample_articles = {
@@ -175,20 +175,18 @@ with tab_predict:
                     st.pyplot(plot_confidence_bars(r, name))
 
                 else:
-                    cols = st.columns(len(models_to_show))
-                    for col, name in zip(cols, models_to_show):
+                    for name in models_to_show:
                         r = results[name]
                         cat = r["category"]
                         color = CATEGORY_COLORS.get(cat, "#90CAF9")
                         icon  = CATEGORY_ICONS.get(cat, "📄")
-                        with col:
-                            st.markdown(f"""
-                            <div class="result-box" style="background:{color}18; border-left: 5px solid {color};">
-                                <span class="badge" style="background:{color}; color:white;">{icon} {cat}</span>
-                                <p style="margin:0.4rem 0 0; color:#595959;">Confidence: <b>{r['confidence']}%</b></p>
-                            </div>
-                            """, unsafe_allow_html=True)
-                            st.pyplot(plot_confidence_bars(r, name))
+                        st.markdown(f"""
+                        <div class="result-box" style="background:{color}18; border-left: 5px solid {color};">
+                            <span class="badge" style="background:{color}; color:white;">{icon} {cat}</span>
+                            &nbsp;&nbsp;<span style="color:#595959;">Confidence: <b>{r['confidence']}%</b> &nbsp;|&nbsp; Model: <b>{name}</b></span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        st.pyplot(plot_confidence_bars(r, name))
 
 
 with tab_batch:
@@ -262,7 +260,7 @@ with tab_eval:
 with tab_about:
     st.header("About This Project")
     st.markdown("""
-    ### News Category Classifier
+    ### Wartafy
     An NLP-based automatic text classification system built as part of a machine learning coursework project.
 
     #### How It Works

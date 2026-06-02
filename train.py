@@ -29,6 +29,19 @@ class LabelDecodingPipeline:
         return self.pipeline.predict_proba(X)
 
 
+# Keep future pickles importable even when training is run as `python train.py`.
+LabelDecodingPipeline.__module__ = "train"
+
+
+class _CompatibleModelUnpickler(pickle.Unpickler):
+    """Map legacy `__main__` pickles back to the train module class."""
+
+    def find_class(self, module, name):
+        if module == "__main__" and name == "LabelDecodingPipeline":
+            return LabelDecodingPipeline
+        return super().find_class(module, name)
+
+
 def build_pipelines() -> dict:
     return {
         "Logistic Regression": Pipeline([
@@ -136,7 +149,7 @@ def load_models() -> dict:
         path = os.path.join(MODEL_DIR, f"{safe}.pkl")
         if os.path.exists(path):
             with open(path, "rb") as f:
-                models[name] = pickle.load(f)
+                models[name] = _CompatibleModelUnpickler(f).load()
     return models
 
 

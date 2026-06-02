@@ -1,6 +1,4 @@
-# News Category Classifier
-
-Compact end-to-end run guide for new users.
+# Wartafy
 
 ## 1) Setup
 
@@ -23,6 +21,24 @@ python train.py
 ```
 
 Trained models are saved to `models/` as `*.pkl`.
+
+## Git LFS for model files
+
+This project uses Git LFS for trained model files in `models/*.pkl`.
+
+Before cloning or pulling model files, contributors should install and initialize Git LFS:
+
+```bash
+git lfs install
+```
+
+If Git LFS is not installed yet, install it first with your package manager, then run the command above.
+
+After cloning, or after pulling commits that update model files, download the LFS-managed files with:
+
+```bash
+git lfs pull
+```
 
 ## 3) Evaluate models
 
